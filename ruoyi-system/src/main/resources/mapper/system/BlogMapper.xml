@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.system.mapper.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.Blog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="appreciation" property="appreciation" jdbcType="BIT" />
+    <result column="commentabled" property="commentabled" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="first_picture" property="firstPicture" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="published" property="published" jdbcType="BIT" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="share_statement" property="shareStatement" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ruoyi.system.domain.Blog" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, appreciation, commentabled, create_time, description, first_picture, flag, published, 
+    recommend, share_statement, title, update_time, views, type_id, user_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_blog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_blog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ruoyi.system.domain.Blog" >
+    insert into t_blog (id, appreciation, commentabled, 
+      create_time, description, first_picture, 
+      flag, published, recommend, 
+      share_statement, title, update_time, 
+      views, type_id, user_id, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{appreciation,jdbcType=BIT}, #{commentabled,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{firstPicture,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=VARCHAR}, #{published,jdbcType=BIT}, #{recommend,jdbcType=BIT}, 
+      #{shareStatement,jdbcType=BIT}, #{title,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{views,jdbcType=INTEGER}, #{typeId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruoyi.system.domain.Blog" >
+    insert into t_blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appreciation != null" >
+        appreciation,
+      </if>
+      <if test="commentabled != null" >
+        commentabled,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="firstPicture != null" >
+        first_picture,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="published != null" >
+        published,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="shareStatement != null" >
+        share_statement,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appreciation != null" >
+        #{appreciation,jdbcType=BIT},
+      </if>
+      <if test="commentabled != null" >
+        #{commentabled,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null" >
+        #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="published != null" >
+        #{published,jdbcType=BIT},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="shareStatement != null" >
+        #{shareStatement,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.system.domain.Blog" >
+    update t_blog
+    <set >
+      <if test="appreciation != null" >
+        appreciation = #{appreciation,jdbcType=BIT},
+      </if>
+      <if test="commentabled != null" >
+        commentabled = #{commentabled,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null" >
+        first_picture = #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="published != null" >
+        published = #{published,jdbcType=BIT},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="shareStatement != null" >
+        share_statement = #{shareStatement,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ruoyi.system.domain.Blog" >
+    update t_blog
+    set appreciation = #{appreciation,jdbcType=BIT},
+      commentabled = #{commentabled,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      published = #{published,jdbcType=BIT},
+      recommend = #{recommend,jdbcType=BIT},
+      share_statement = #{shareStatement,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      views = #{views,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.system.domain.Blog" >
+    update t_blog
+    set appreciation = #{appreciation,jdbcType=BIT},
+      commentabled = #{commentabled,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      published = #{published,jdbcType=BIT},
+      recommend = #{recommend,jdbcType=BIT},
+      share_statement = #{shareStatement,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      views = #{views,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateViews" parameterType="java.lang.Long" >
+    update Blog b set b.views= b.views+1   where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultVoMap" type="com.ruoyi.system.VO.BlogVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="appreciation" property="appreciation" jdbcType="BIT" />
+    <result column="commentabled" property="commentabled" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="first_picture" property="firstPicture" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="published" property="published" jdbcType="BIT" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="share_statement" property="shareStatement" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <association property="user" column="{id=user_id}" select="com.ruoyi.system.mapper.BlogUserMapper.selectByPrimaryKey" />
+    <association property="type" column="{id=type_id}" select="com.ruoyi.system.mapper.TypeMapper.selectByPrimaryKey" />
+        <collection property="tags" ofType="com.ruoyi.system.domain.Tag" select="com.ruoyi.system.mapper.TagMapper.getTagList" column="{blog_id=id}"></collection>
+        <collection property="comments" ofType="com.ruoyi.system.domain.Comment" select="com.ruoyi.system.mapper.CommentMapper.getCommentList" column="{blog_id=id}"></collection>
+  </resultMap>
+  <sql id="BlogVo_Column_List" >
+    id, appreciation, commentabled, create_time, description, first_picture, flag, published,
+    recommend, share_statement, title, update_time, views, content, type_id, user_id
+  </sql>
+  <select id="findTop" resultMap="BaseResultVoMap" parameterType="Integer" >
+    select
+    <include refid="BlogVo_Column_List" />
+
+    from t_blog
+    where  recommend = true order by update_time desc  limit 0,#{size,jdbcType=INTEGER}
+  </select>
+  <select id="fundBlogLimit" resultMap="BaseResultVoMap" parameterType="Integer" >
+    select
+    <include refid="BlogVo_Column_List" />
+    from t_blog
+    order by update_time desc  limit #{cpage,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+  </select>
+  <select id="fundBlogCount" resultType="Integer" >
+    select
+    count(1)
+    from t_blog
+  </select>
+  <select id="getBlogList" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from t_blog
+    left join  t_blog_tags on t_blog.id=t_blog_tags.blogs_id
+    where t_blog_tags.tags_id = #{tags_id,jdbcType=BIGINT}
+  </select>
+  <select id="getBlogListByTypeId" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from t_blog
+    where type_id = #{type_id,jdbcType=BIGINT}
+  </select>
+
+</mapper>

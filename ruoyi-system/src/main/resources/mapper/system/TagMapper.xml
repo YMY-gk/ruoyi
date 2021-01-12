@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.system.mapper.TagMapper" >
+  <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.Tag" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_tag
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_tag
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ruoyi.system.domain.Tag" >
+    insert into t_tag (id, name)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruoyi.system.domain.Tag" >
+    insert into t_tag
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.system.domain.Tag" >
+    update t_tag
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.system.domain.Tag" >
+    update t_tag
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseTagVoMap" type="com.ruoyi.system.VO.TagVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <collection property="blogs" ofType="com.ruoyi.system.domain.Blog" select="com.ruoyi.system.mapper.BlogMapper.getBlogList" column="{tags_id=id}"></collection>
+  </resultMap>
+  <select id="ListTagTop" resultMap="BaseTagVoMap" parameterType="Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_tag
+    order by id limit 0,#{size,jdbcType=INTEGER}
+  </select>
+  <select id="getTagList" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from t_tag
+    left join  t_blog_tags on t_tag.id=t_blog_tags.tags_id
+    where t_blog_tags.blogs_id = #{blog_id,jdbcType=BIGINT}
+  </select>
+</mapper>
