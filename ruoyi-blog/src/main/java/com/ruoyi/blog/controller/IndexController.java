@@ -4,6 +4,9 @@ package com.ruoyi.blog.controller;
 import com.ruoyi.blog.service.BlogService;
 import com.ruoyi.blog.service.TagService;
 import com.ruoyi.blog.service.TypeService;
+import com.ruoyi.blog.service.Userservice;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.model.TypeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.stereotype.Controller;
@@ -26,15 +29,20 @@ public class IndexController {
 	@Autowired
 	private TagService tagServiceImpl;
 
+	@Autowired
+	private Userservice userservice;
+
 	/**
 	 * 首页面显示
 	 * @return
 	 */
-	@GetMapping("/")
-	public String index(Model model,@PathVariable("page") long page ){
-
+	@GetMapping("/{page}")
+	public String index(Model model,@PathVariable("page") int page ){
+		if (page<1){
+			page=1;
+		}
 	    //1. 获取分页的博客列表
-		model.addAttribute("page",blogServiceImpl.ListBlog(4,1));
+		model.addAttribute("page",blogServiceImpl.ListBlog(4,Integer.valueOf(page)));
 		//2. 获取分类的内容(显示6条)
 		model.addAttribute("types",typeServiceImpl.listTypeTop(6));
 		//3. 获取标签的内容
@@ -49,10 +57,16 @@ public class IndexController {
 	 * @return
 	 * @param model
 	 */
-    @PostMapping("/search")
-    public String search( Model model) {
-        model.addAttribute("page", null);
-        model.addAttribute("query", null);
+    @RequestMapping("/search")
+    public String search(Model model, TypeQuery typeQuery,@RequestParam String query) {
+		typeQuery.setTitle(query);
+		typeQuery.setContent(query);
+		if (typeQuery.getPageSize()==0){
+			typeQuery.setPageSize(2);
+			typeQuery.setPageNum(1);
+		}
+        model.addAttribute("page", blogServiceImpl.ListBlogbyTypeId(typeQuery));
+        model.addAttribute("query", query);
         return "blog/search";
     }
 
@@ -65,7 +79,7 @@ public class IndexController {
     @GetMapping("/footer/newblog")
     public String newblos(Model model){
 		model.addAttribute("newblogs",blogServiceImpl.listRecommendBlogTop(3));
-    	return "blog/_fragments :: newblogList";
+		return "blog/_fragments :: newblogList";
 	}
 
 }

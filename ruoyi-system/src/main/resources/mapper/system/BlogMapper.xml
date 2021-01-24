@@ -28,11 +28,9 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultVoMap" parameterType="java.lang.Long" >
     select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    <include refid="BlogVo_Column_List" />
     from t_blog
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -246,7 +244,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateViews" parameterType="java.lang.Long" >
-    update Blog b set b.views= b.views+1   where id = #{id,jdbcType=BIGINT}
+    update t_blog b set b.views= b.views+1   where id = #{id,jdbcType=BIGINT}
   </update>
   <resultMap id="BaseResultVoMap" type="com.ruoyi.system.VO.BlogVo" >
     <id column="id" property="id" jdbcType="BIGINT" />
@@ -303,5 +301,131 @@
     from t_blog
     where type_id = #{type_id,jdbcType=BIGINT}
   </select>
+<select id="fundBlogLimitByTypeId" resultMap="BaseResultVoMap" parameterType="com.ruoyi.system.model.TypeQuery" >
+    select
+    <include refid="Base_Column_List" />
+    from t_blog
+    where  1=1
+  <if test="id != null" >
+    and id= #{id,jdbcType=BIGINT}
+  </if>
+  <if test="appreciation != null" >
+    and appreciation=#{appreciation,jdbcType=BIT}
+  </if>
+  <if test="commentabled != null" >
+    and commentabled =#{commentabled,jdbcType=BIT}
+  </if>
+  <if test="createTime != null" >
+    and create_Time= #{createTime,jdbcType=TIMESTAMP}
+  </if>
+  <if test="description != null" >
+    and description= #{description,jdbcType=VARCHAR}
+  </if>
+  <if test="firstPicture != null" >
+    and first_Picture= #{firstPicture,jdbcType=VARCHAR}
+  </if>
+  <if test="flag != null" >
+    and flag=#{flag,jdbcType=VARCHAR}
+  </if>
+  <if test="published != null" >
+    and published=#{published,jdbcType=BIT}
+  </if>
+  <if test="recommend != null" >
+    and recommend=#{recommend,jdbcType=BIT}
+  </if>
+  <if test="shareStatement != null" >
+    and share_Statement= #{shareStatement,jdbcType=BIT}
+  </if>
+  <if test="title != null" >
+    and title  like concat('%',#{title,jdbcType=VARCHAR},'%')
 
+  </if>
+  <if test="updateTime != null" >
+    and update_Time=#{updateTime,jdbcType=TIMESTAMP}
+  </if>
+  <if test="views != null" >
+    and views=#{views,jdbcType=INTEGER}
+  </if>
+  <if test="typeId != null" >
+    and type_Id=#{typeId,jdbcType=BIGINT}
+  </if>
+  <if test="userId != null" >
+    and user_Id= #{userId,jdbcType=BIGINT}
+  </if>
+  <if test="content != null" >
+    and content like concat('%',#{content,jdbcType=VARCHAR},'%')
+  </if>
+  <if test="tagsId != null" >
+    and exists(select blogs_id from t_blog_tags where tags_id=#{tagsId,jdbcType=BIGINT})
+  </if>
+  </select>
+  <select id="fundBlogCountByType" resultType="Integer" parameterType="com.ruoyi.system.model.TypeQuery" >
+    select
+    count(1)
+    from t_blog t where 1=1
+    <if test="id != null" >
+      and t.id= #{id,jdbcType=BIGINT}
+    </if>
+    <if test="appreciation != null" >
+      and t.ppreciation=#{appreciation,jdbcType=BIT}
+    </if>
+    <if test="commentabled != null" >
+      and t.commentabled =#{commentabled,jdbcType=BIT}
+    </if>
+    <if test="createTime != null" >
+      and t.create_Time= #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="description != null" >
+      and t.description= #{description,jdbcType=VARCHAR}
+    </if>
+    <if test="firstPicture != null" >
+      and t.first_Picture= #{firstPicture,jdbcType=VARCHAR}
+    </if>
+    <if test="flag != null" >
+      and t.flag=#{flag,jdbcType=VARCHAR}
+    </if>
+    <if test="published != null" >
+      and t.published=#{published,jdbcType=BIT}
+    </if>
+    <if test="recommend != null" >
+      and t.recommend=#{recommend,jdbcType=BIT}
+    </if>
+    <if test="shareStatement != null" >
+      and t.share_Statement= #{shareStatement,jdbcType=BIT}
+    </if>
+    <if test="title != null" >
+      and t.title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="updateTime != null" >
+      and t.update_Time=#{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="views != null" >
+      and t.views=#{views,jdbcType=INTEGER}
+    </if>
+    <if test="typeId != null" >
+      and t.type_Id=#{typeId,jdbcType=BIGINT}
+    </if>
+    <if test="userId != null" >
+      and t.user_Id= #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="content != null" >
+      and t.content like concat('%',#{content,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="tagsId != null" >
+      and exists(select blogs_id from t_blog_tags where tags_id=#{tagsId,jdbcType=BIGINT})
+    </if>
+  </select>
+
+  <select id="findGroupYear" resultType="java.lang.String" parameterType="Integer" >
+    select
+       DATE_FORMAT(update_time,'%Y')  year
+    from t_blog   group by year order by year desc
+  </select>
+
+  <select id="findByYear" resultMap="BaseResultVoMap" parameterType="java.lang.String" >
+    select
+    <include refid="BlogVo_Column_List" />
+    from t_blog
+    where   DATE_FORMAT(update_time,'%Y') = #{year,jdbcType=VARCHAR} order by update_time desc
+  </select>
 </mapper>

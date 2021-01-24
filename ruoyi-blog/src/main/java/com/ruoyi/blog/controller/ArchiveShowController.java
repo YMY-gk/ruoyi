@@ -24,6 +24,6 @@ public class ArchiveShowController {
     public String archives(Model model) {
         model.addAttribute("archiveMap", blogServiceImpl.archiveBlog());
         model.addAttribute("blogCount", blogServiceImpl.countBlog());
-        return "archives";
+        return "blog/archives";
     }
 }

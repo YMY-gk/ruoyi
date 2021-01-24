@@ -5,6 +5,7 @@ import com.ruoyi.blog.service.TagService;
 import com.ruoyi.blog.vo.BlogQuery;
 import com.ruoyi.system.VO.TagVo;
 import com.ruoyi.system.domain.Tag;
+import com.ruoyi.system.model.TypeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +31,13 @@ public class TagShowController {
     private BlogService blogServiceImpl;
 
 
-    @GetMapping("/tags/{id}")
-    public String tags(Model model) {
+    @GetMapping("/tags")
+    public String tags(Model model, TypeQuery typeQuery) {
 
         List<TagVo> tags = tagServiceImpl.ListTagTop(10000);
-        Long id =0L;
-        if (id == -1){
-            id = tags.get(0).getId();
-        }
-        BlogQuery blogQuery = new BlogQuery();
         model.addAttribute("tags",tags);
-        model.addAttribute("page",null);
-        model.addAttribute("avtiveTagId",id);
+        model.addAttribute("page",blogServiceImpl.ListBlogbyTypeId(typeQuery));
+        model.addAttribute("avtiveTagId",typeQuery.getTagsId());
         return "blog/tags";
     }
 

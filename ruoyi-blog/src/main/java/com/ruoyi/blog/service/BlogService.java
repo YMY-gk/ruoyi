@@ -2,6 +2,7 @@ package com.ruoyi.blog.service;
 
 import com.ruoyi.system.VO.BlogVo;
 import com.ruoyi.system.domain.Blog;
+import com.ruoyi.system.model.TypeQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -18,14 +19,14 @@ public interface BlogService {
      * @param id
      * @return
      */
-    Blog getBlog(Long id);
+    BlogVo getBlog(Long id);
 
     /**
      * 通过id查询单条博客（前端使用）
      * @param id
      * @return
      */
-    Blog getAadConvertBlog(Long id);
+    BlogVo getAadConvertBlog(Long id);
 
 
 //    /**
@@ -90,7 +91,7 @@ public interface BlogService {
      * 显示归档信息
      * @return
      */
-    Map<String ,List<Blog>> archiveBlog();
+    Map<String ,List<BlogVo>> archiveBlog();
 
 
     Long countBlog();
@@ -116,6 +117,5 @@ public interface BlogService {
     void deleteBlog(Long id);
 
 
-
-
+    Map<String,Object> ListBlogbyTypeId(TypeQuery typeQuery);
 }

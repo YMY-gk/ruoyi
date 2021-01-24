@@ -2,8 +2,7 @@ package com.ruoyi.system.domain;
 
 import java.util.Date;
 
-public class Blog {
-    private Long id;
+public class Blog {  private Long id;
 
     private Boolean appreciation;
 
@@ -34,6 +33,7 @@ public class Blog {
     private Long userId;
 
     private String content;
+
 
     public Long getId() {
         return id;

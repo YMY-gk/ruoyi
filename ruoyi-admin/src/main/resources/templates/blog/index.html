@@ -74,10 +74,10 @@
                     <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
                         <div class="ui middle aligned two column grid">
                             <dvi class="column">
-                                <a href="#" th:href="@{/blog/(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                <a href="#" th:href="@{/blog/{page}(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
                             </dvi>
                             <dvi class="right aligned column">
-                                <a href="#" th:href="@{/blog/(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                <a href="#" th:href="@{/blog/{page}(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
                             </dvi>
                         </div>
                     </div>
@@ -91,13 +91,13 @@
                                     <i class="idea icon"></i>分类
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" th:href="@{/blog/types/-1}" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="#" th:href="@{/blog/types(pageNum=1,pageSize=2)}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu" >
-                                <a href="#" th:href="@{/blog/types/{id}(id=${type.id})}" class="item" th:each="type : ${types}">
+                                <a href="#" th:href="@{/blog/types(pageNum=1,pageSize=2,typeId=${type.id})}" class="item" th:each="type : ${types}">
                                     <span th:text="${type.name}">学习日志</span>
                                     <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">10</div>
                                 </a>
@@ -134,12 +134,12 @@
                                     <i class="tags icon"></i>标签
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" th:href="@{/blog/tags/-1}" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="#" th:href="@{/blog/tags(pageNum=1,pageSize=2)}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
-                            <a href="#" th:href="@{/blog/tags/{id}(id=${tag.id})}" class="ui teal basic center pointing label" th:each="tag : ${tags}">
+                            <a href="#" th:href="@{/blog/tags(pageNum=1,pageSize=2,tagsId=${tag.id})}" class="ui teal basic center pointing label" th:each="tag : ${tags}">
                                 <span th:text="${tag.name}">JavaEE</span>
                                 <div class="detail" th:text="${#arrays.length(tag.blogs)}">23</div>
                             </a>
